@@ -152,7 +152,7 @@ Public Class Form1
         Button2.Enabled = True
         Button3.Enabled = True
         Button4.Enabled = True
-
+        TextBox4.Enabled = True
     End Sub
 
 
@@ -271,9 +271,6 @@ Public Class Form1
 
     End Sub
 
-    Private Sub TreeView1_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterSelect
-
-    End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         contali = 0
@@ -335,6 +332,99 @@ Public Class Form1
 
     Private Sub Label6_Click(sender As Object, e As EventArgs) Handles Label6.Click
 
+    End Sub
+
+    Sub UnsetColor(ByVal TV As TreeView)
+        For Each TVNode As TreeNode In TV.Nodes
+            UnsetColorRecursion(TVNode, TV.BackColor)
+        Next
+    End Sub
+    Sub UnsetColorRecursion(ByVal TN As TreeNode, ByVal BGcolor As Color)
+        TN.BackColor = BGcolor
+        For Each TVNode As TreeNode In TN.Nodes
+            UnsetColorRecursion(TVNode, BGcolor)
+        Next
+    End Sub
+    Private Sub TreeView1_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeView1.AfterSelect
+        UnsetColor(sender)
+        e.Node.BackColor = Color.Gray
+    End Sub
+    Private Sub TextBox4_TextChanged(sender As Object, e As EventArgs) Handles TextBox4.TextChanged
+        If TextBox4.Focus() = False Then
+            Exit Sub
+        End If
+        Button5.Enabled = True
+        Button6.Enabled = True
+        If SearchTheTreeView(TreeView1, TextBox4.Text.ToLower.Trim) Is Nothing Then
+
+        Else
+            TreeView1.SelectedNode = SearchTheTreeView(TreeView1, TextBox4.Text.ToLower.Trim)
+        End If
+
+    End Sub
+
+    Dim NodesThatMatch As New List(Of TreeNode)
+
+    Private Function SearchTheTreeView(ByVal TV As TreeView, ByVal TextToFind As String) As TreeNode
+        '  Empty previous
+        NodesThatMatch.Clear()
+
+        ' Keep calling RecursiveSearch
+        For Each TN As TreeNode In TV.Nodes
+            If TN.Text = TextToFind Then
+                NodesThatMatch.Add(TN)
+            End If
+
+            RecursiveSearch(TN, TextToFind)
+        Next
+
+        If NodesThatMatch.Count > 0 Then
+            Label7.Text = "Search istances: 1 of " & NodesThatMatch.Count
+            numero = 0
+            Return NodesThatMatch(0)
+        Else
+            numero = 0
+            Label7.Text = "Search istances: 0"
+            Return Nothing
+        End If
+
+    End Function
+
+    Private Sub RecursiveSearch(ByVal treeNode As TreeNode, ByVal TextToFind As String)
+
+        ' Keep calling the test recursively.
+        For Each TN As TreeNode In treeNode.Nodes
+            If TN.Text.StartsWith(TextToFind) Then
+                NodesThatMatch.Add(TN)
+            End If
+
+            RecursiveSearch(TN, TextToFind)
+        Next
+    End Sub
+
+    Dim numero As Integer = 0
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        numero = numero + 1
+
+
+        If numero > NodesThatMatch.Count - 1 Then
+            numero = numero - 1
+            Exit Sub
+        End If
+        Label7.Text = "Search istances: " & numero + 1 & " of " & NodesThatMatch.Count
+
+        TreeView1.SelectedNode = NodesThatMatch(numero)
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        numero = numero - 1
+        If numero < 0 Then
+            numero = 0
+            Exit Sub
+        End If
+        Label7.Text = "Search istances: " & numero + 1 & " of " & NodesThatMatch.Count
+        TreeView1.SelectedNode = NodesThatMatch(numero)
     End Sub
 End Class
 
