@@ -46,6 +46,9 @@ Partial Class Form1
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ContextMenuStrip2.SuspendLayout()
         CType(Me.NumericUpDown1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,7 +73,7 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(16, 168)
+        Me.Button1.Location = New System.Drawing.Point(16, 153)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(354, 50)
         Me.Button1.TabIndex = 3
@@ -80,9 +83,9 @@ Partial Class Form1
         'Button2
         '
         Me.Button2.Enabled = False
-        Me.Button2.Location = New System.Drawing.Point(16, 516)
+        Me.Button2.Location = New System.Drawing.Point(16, 562)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(354, 39)
+        Me.Button2.Size = New System.Drawing.Size(354, 50)
         Me.Button2.TabIndex = 4
         Me.Button2.Text = "Save HA Config"
         Me.Button2.UseVisualStyleBackColor = True
@@ -167,7 +170,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(12, 340)
+        Me.Label5.Location = New System.Drawing.Point(12, 379)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(153, 24)
         Me.Label5.TabIndex = 11
@@ -176,7 +179,7 @@ Partial Class Form1
         'Button3
         '
         Me.Button3.Enabled = False
-        Me.Button3.Location = New System.Drawing.Point(16, 377)
+        Me.Button3.Location = New System.Drawing.Point(16, 416)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(157, 39)
         Me.Button3.TabIndex = 12
@@ -186,7 +189,7 @@ Partial Class Form1
         'Button4
         '
         Me.Button4.Enabled = False
-        Me.Button4.Location = New System.Drawing.Point(213, 377)
+        Me.Button4.Location = New System.Drawing.Point(213, 416)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(157, 39)
         Me.Button4.TabIndex = 13
@@ -195,7 +198,7 @@ Partial Class Form1
         '
         'NumericUpDown1
         '
-        Me.NumericUpDown1.Location = New System.Drawing.Point(308, 465)
+        Me.NumericUpDown1.Location = New System.Drawing.Point(308, 477)
         Me.NumericUpDown1.Maximum = New Decimal(New Integer() {20, 0, 0, 0})
         Me.NumericUpDown1.Name = "NumericUpDown1"
         Me.NumericUpDown1.Size = New System.Drawing.Size(62, 28)
@@ -204,7 +207,7 @@ Partial Class Form1
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(12, 467)
+        Me.Label6.Location = New System.Drawing.Point(12, 479)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(284, 24)
         Me.Label6.TabIndex = 15
@@ -213,7 +216,7 @@ Partial Class Form1
         'TextBox4
         '
         Me.TextBox4.Enabled = False
-        Me.TextBox4.Location = New System.Drawing.Point(63, 272)
+        Me.TextBox4.Location = New System.Drawing.Point(63, 306)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(260, 28)
         Me.TextBox4.TabIndex = 16
@@ -222,7 +225,7 @@ Partial Class Form1
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(12, 245)
+        Me.Label7.Location = New System.Drawing.Point(12, 279)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(163, 24)
         Me.Label7.TabIndex = 17
@@ -231,7 +234,7 @@ Partial Class Form1
         'Button5
         '
         Me.Button5.Enabled = False
-        Me.Button5.Location = New System.Drawing.Point(329, 272)
+        Me.Button5.Location = New System.Drawing.Point(329, 306)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(41, 28)
         Me.Button5.TabIndex = 18
@@ -241,18 +244,56 @@ Partial Class Form1
         'Button6
         '
         Me.Button6.Enabled = False
-        Me.Button6.Location = New System.Drawing.Point(16, 272)
+        Me.Button6.Location = New System.Drawing.Point(16, 306)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(41, 28)
         Me.Button6.TabIndex = 19
         Me.Button6.Text = "<"
         Me.Button6.UseVisualStyleBackColor = True
         '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Checked = True
+        Me.RadioButton1.Enabled = False
+        Me.RadioButton1.Location = New System.Drawing.Point(16, 248)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(76, 28)
+        Me.RadioButton1.TabIndex = 20
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Starts"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Enabled = False
+        Me.RadioButton2.Location = New System.Drawing.Point(122, 248)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(104, 28)
+        Me.RadioButton2.TabIndex = 21
+        Me.RadioButton2.Text = "Contains"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'RadioButton3
+        '
+        Me.RadioButton3.AutoSize = True
+        Me.RadioButton3.Enabled = False
+        Me.RadioButton3.Location = New System.Drawing.Point(258, 248)
+        Me.RadioButton3.Name = "RadioButton3"
+        Me.RadioButton3.Size = New System.Drawing.Size(112, 28)
+        Me.RadioButton3.TabIndex = 22
+        Me.RadioButton3.Text = "EndsWith"
+        Me.RadioButton3.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(10.0!, 22.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1049, 734)
+        Me.Controls.Add(Me.RadioButton3)
+        Me.Controls.Add(Me.RadioButton2)
+        Me.Controls.Add(Me.RadioButton1)
         Me.Controls.Add(Me.Button6)
         Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Label7)
@@ -309,4 +350,7 @@ Partial Class Form1
     Friend WithEvents Label7 As Label
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
+    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton3 As RadioButton
 End Class

@@ -153,6 +153,7 @@ Public Class Form1
         Button3.Enabled = True
         Button4.Enabled = True
         TextBox4.Enabled = True
+
     End Sub
 
 
@@ -355,14 +356,20 @@ Public Class Form1
         End If
         Button5.Enabled = True
         Button6.Enabled = True
+        RadioButton1.Enabled = True
+        RadioButton2.Enabled = True
+        RadioButton3.Enabled = True
+
+        cercami()
+
+    End Sub
+    Sub cercami()
         If SearchTheTreeView(TreeView1, TextBox4.Text.ToLower.Trim) Is Nothing Then
 
         Else
             TreeView1.SelectedNode = SearchTheTreeView(TreeView1, TextBox4.Text.ToLower.Trim)
         End If
-
     End Sub
-
     Dim NodesThatMatch As New List(Of TreeNode)
 
     Private Function SearchTheTreeView(ByVal TV As TreeView, ByVal TextToFind As String) As TreeNode
@@ -371,9 +378,20 @@ Public Class Form1
 
         ' Keep calling RecursiveSearch
         For Each TN As TreeNode In TV.Nodes
-            If TN.Text = TextToFind Then
-                NodesThatMatch.Add(TN)
+            If RadioButton1.Checked Then
+                If TN.Text.StartsWith(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
+            ElseIf RadioButton2.Checked Then
+                If TN.Text.Contains(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
+            ElseIf RadioButton3.Checked Then
+                If TN.Text.EndsWith(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
             End If
+
 
             RecursiveSearch(TN, TextToFind)
         Next
@@ -394,9 +412,20 @@ Public Class Form1
 
         ' Keep calling the test recursively.
         For Each TN As TreeNode In treeNode.Nodes
-            If TN.Text.StartsWith(TextToFind) Then
-                NodesThatMatch.Add(TN)
+            If RadioButton1.Checked Then
+                If TN.Text.StartsWith(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
+            ElseIf RadioButton2.Checked Then
+                If TN.Text.Contains(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
+            ElseIf RadioButton3.Checked Then
+                If TN.Text.EndsWith(TextToFind) Then
+                    NodesThatMatch.Add(TN)
+                End If
             End If
+
 
             RecursiveSearch(TN, TextToFind)
         Next
@@ -425,6 +454,30 @@ Public Class Form1
         End If
         Label7.Text = "Search istances: " & numero + 1 & " of " & NodesThatMatch.Count
         TreeView1.SelectedNode = NodesThatMatch(numero)
+    End Sub
+
+    Private Sub TreeView1_BeforeSelect(sender As Object, e As TreeViewCancelEventArgs) Handles TreeView1.BeforeSelect
+
+    End Sub
+
+    Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
+        TextBox4.Text = e.Node.Text
+    End Sub
+
+    Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
+
+        cercami()
+
+    End Sub
+
+    Private Sub RadioButton2_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton2.CheckedChanged
+
+        cercami()
+    End Sub
+
+    Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
+
+        cercami()
     End Sub
 End Class
 
