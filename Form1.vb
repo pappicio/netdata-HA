@@ -4,7 +4,7 @@ Imports Newtonsoft.Json.Linq
 
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        TreeView1.DrawMode = TreeViewDrawMode.OwnerDrawText
     End Sub
 
 
@@ -26,11 +26,14 @@ Public Class Form1
 
     Dim l As List(Of String)
     Dim contali As Integer = 0
+    Dim webpage As String = ""
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim request As HttpWebRequest
         Dim response As HttpWebResponse = Nothing
         Dim reader As StreamReader
         Dim hhh As String = "http://" & TextBox1.Text.Trim & ":" & TextBox2.Text.Trim & "/api/v1/allmetrics?format=json"
+        webpage = hhh
         request = DirectCast(WebRequest.Create(hhh), HttpWebRequest)
         Try
             response = DirectCast(request.GetResponse(), HttpWebResponse)
@@ -153,6 +156,7 @@ Public Class Form1
         Button3.Enabled = True
         Button4.Enabled = True
         TextBox4.Enabled = True
+        Button7.Enabled = True
 
     End Sub
 
@@ -399,7 +403,9 @@ Public Class Form1
         If NodesThatMatch.Count > 0 Then
             Label7.Text = "Search istances: 1 of " & NodesThatMatch.Count
             numero = 0
+            colorami = NodesThatMatch(0)
             Return NodesThatMatch(0)
+            colorami = Nothing
         Else
             numero = 0
             Label7.Text = "Search istances: 0"
@@ -433,6 +439,8 @@ Public Class Form1
 
     Dim numero As Integer = 0
 
+    Dim colorami As TreeNode = Nothing
+
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         numero = numero + 1
 
@@ -442,8 +450,9 @@ Public Class Form1
             Exit Sub
         End If
         Label7.Text = "Search istances: " & numero + 1 & " of " & NodesThatMatch.Count
-
+        colorami = NodesThatMatch(numero)
         TreeView1.SelectedNode = NodesThatMatch(numero)
+        colorami = Nothing
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
@@ -453,7 +462,9 @@ Public Class Form1
             Exit Sub
         End If
         Label7.Text = "Search istances: " & numero + 1 & " of " & NodesThatMatch.Count
+        colorami = NodesThatMatch(numero)
         TreeView1.SelectedNode = NodesThatMatch(numero)
+        colorami = Nothing
     End Sub
 
     Private Sub TreeView1_BeforeSelect(sender As Object, e As TreeViewCancelEventArgs) Handles TreeView1.BeforeSelect
@@ -461,7 +472,9 @@ Public Class Form1
     End Sub
 
     Private Sub TreeView1_NodeMouseClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TreeView1.NodeMouseClick
+
         TextBox4.Text = e.Node.Text
+
     End Sub
 
     Private Sub RadioButton1_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged
@@ -478,6 +491,62 @@ Public Class Form1
     Private Sub RadioButton3_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged
 
         cercami()
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Dim webx As String = webpage
+        If RadioButton4.Checked Then
+
+        ElseIf RadioButton5.Checked Then
+            webx = webx.Replace("?format=json", "?format=prometheus")
+        ElseIf RadioButton6.Checked Then
+            webx = webx.Replace("?format=json", "")
+
+        End If
+        NavigateWebURL(webx, "default")
+    End Sub
+    Private Sub NavigateWebURL(ByVal URL As String, Optional browser As String = "default")
+
+        If Not (browser = "default") Then
+            Try
+                '// try set browser if there was an error (browser not installed)
+                Process.Start(browser, URL)
+            Catch ex As Exception
+                '// use default browser
+                Process.Start(URL)
+            End Try
+
+        Else
+            '// use default browser
+            Process.Start(URL)
+
+        End If
+
+    End Sub
+
+
+    Private greenBrush As SolidBrush = New SolidBrush(Color.Gray)
+    Private graybrush As SolidBrush = New SolidBrush(Color.DarkGray)
+
+    Private Sub TreeView1_DrawNode(sender As Object, e As DrawTreeNodeEventArgs) Handles TreeView1.DrawNode
+        If e.Node.IsSelected Then
+            If TreeView1.Focused Then e.Graphics.FillRectangle(greenBrush, e.Bounds)
+        Else
+            e.Graphics.FillRectangle(Brushes.White, e.Bounds)
+        End If
+        If colorami Is Nothing Then
+        Else
+            If colorami Is e.Node Then
+                e.Graphics.FillRectangle(graybrush, e.Bounds)
+                colorami = Nothing
+            End If
+        End If
+
+        TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.TreeView.Font, e.Node.Bounds, e.Node.ForeColor)
+    End Sub
+
+    Private Sub TreeView1_MouseDown(sender As Object, e As MouseEventArgs) Handles TreeView1.MouseDown
+
     End Sub
 End Class
 
